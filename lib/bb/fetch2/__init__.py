@@ -1963,6 +1963,7 @@ from . import npm
 from . import npmsw
 from . import az
 from . import crate
+from . import nuget
 
 methods.append(local.Local())
 methods.append(wget.Wget())
@@ -1984,3 +1985,4 @@ methods.append(npm.Npm())
 methods.append(npmsw.NpmShrinkWrap())
 methods.append(az.Az())
 methods.append(crate.Crate())
+methods.append(nuget.Nuget())

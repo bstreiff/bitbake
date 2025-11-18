@@ -780,6 +780,44 @@ as described in the :yocto_docs:`Creating Node Package Manager (NPM) Packages
 </dev-manual/common-tasks.html#creating-node-package-manager-npm-packages>`
 section of the Yocto Project.
 
+.. _nuget-fetcher:
+
+NuGet Fetcher (``nuget://``)
+----------------------------
+
+This submodule fetches archives from a
+`NuGet <https://en.wikipedia.org/wiki/NuGet>`__ package repository.
+Such packages are typically hosted on https://www.nuget.org/ but
+other repositories can be used.
+
+The format for the :term:`SRC_URI` setting must be::
+
+   SRC_URI = "nuget://sourcename/packagename/version;ParameterA=xxx;ParameterB=xxx;..."
+
+*sourcename* is the name of the package source. Any package sources that
+are not ``nuget.org`` must have a corresponding ``NUGET_SOURCE_sourcename``
+variable set to the repository's
+`Service Index URL <https://learn.microsoft.com/en-us/nuget/api/service-index>`__.
+For example:
+
+   # Azure Artifacts:
+   # https://learn.microsoft.com/en-us/azure/devops/artifacts/get-started-nuget?view=azure-devops
+   NUGET_SOURCE_myazurerepo = https://pkgs.dev.azure.com/myOrganization/MyProject/_packaging/MyFeed/nuget/v3/index.json
+
+   # Artifactory repos:
+   # https://jfrog.com/help/r/jfrog-artifactory-documentation/connect-the-nuget-client-to-artifactory
+   NUGET_SOURCE_myartifactoryrepo = https://myOrganization.jfrog.io/artifactory/api/nuget/v3/MyFeed/index.json
+
+This is not a requirement for ``nuget.org``; the fetcher is already aware of
+nuget.org's service index location of ``https://api.nuget.org/v3/index.json``.
+
+This fetcher uses the "v3" ``SearchQueryService`` API to find packages. The "v2" API is not supported.
+
+This fetcher supports the following parameters:
+
+-  *"downloadfilename":* Specifies the filename used when storing the downloaded file.
+
+
 Other Fetchers
 --------------
 
